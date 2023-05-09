@@ -17,27 +17,37 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav mb-2 mb-lg-0">
-				<li class="nav-item">
-					<a class="nav-link" href="/login">Login</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/register">Register</a>
-				</li>
-				<li class="nav-item ">
-					<div class="btn-group dropstart">
-						<button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							Profile
-						</button>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Account</a></li>
-							<li><a class="dropdown-item" href="#">Settings</a></li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li><a class="dropdown-item" href="#">Logout</a></li>
-						</ul>
-					</div>
-				</li>
+				@auth
+					<li class="nav-item ">
+						<div class="btn-group dropstart">
+							<button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+								Profile
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Account</a></li>
+								<li><a class="dropdown-item" href="#">Settings</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li>
+									<form action="/logout" method="POST">
+                                        @csrf
+										<button type="submit" class="dropdown-item" onclick="return confirm('Are you sure want to logout?')">
+											Logout
+										</button>
+									</form>
+								</li>
+							</ul>
+						</div>
+					</li>
+				@else
+					<li class="nav-item">
+						<a class="nav-link" href="/login">Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/register">Register</a>
+					</li>
+				@endauth
 			</ul>
 			{{-- <form class="d-flex" role="search">
 				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
