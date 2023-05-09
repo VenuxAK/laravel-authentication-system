@@ -37,6 +37,23 @@ class AuthController extends Controller
     {
         return view("auth.login");
     }
+    public function post_login()
+    {
+        $formData = request()->validate([
+            "email" => ["required", "email", Rule::exists("users", "email")],
+            "password" => ["required", "max:254"]
+        ], [
+            "email.exists" => "Email address not register yet" // Overwrite default error message with custom message
+        ]);
+
+        if (auth()->attempt($formData)) {
+            return redirect("/")->with("success", "Welcome back");
+        } else {
+            return redirect()->back()->withErrors([
+                "errors" => "Wrong Credentials" // Redirect with custom error message
+            ]);
+        }
+    }
 
     public function logout()
     {
